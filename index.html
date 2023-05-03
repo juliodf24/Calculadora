@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="calculadora.ico" type="image/x-icon" />
+    <title>Calculadora</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .fundo{
+            background-color: #212121;
+            height: 100vh;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+        .calculadora{
+            position: absolute;
+            background-color: #212121;
+            border-radius: 20px;
+            box-shadow: 15px 15px 30px rgb(25, 25, 25),
+             -15px -15px 30px rgb(60, 60, 60);
+             padding: 2px;
+            /* centralizar  */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+           /*--------------*/
+        }
+        .preto{
+            width: 50px;
+            height: 50px;
+            font-size: 25px;
+            cursor: pointer;
+            border: none;
+            background-color: #333333;
+            color: #f5f5f5;
+            border-radius: 50%;
+            margin: 3px;
+        }
+        .zero{
+            width: 50px;
+            height: 50px;
+            font-size: 25px;
+            cursor: pointer;
+            border: none;
+            background-color: #333333;
+            color: #f5f5f5;
+            border-radius: 100px;
+            margin: 3px;
+        }
+        .cinza{
+            width: 50px;
+            height: 50px;
+            font-size: 25px;
+            cursor: pointer;
+            border: none;
+            background-color: #a6a4a6;
+            color: #f5f5f5;
+            border-radius: 50%;
+            margin: 3px;
+        }
+        .laranja{
+            width: 50px;
+            height: 50px;
+            font-size: 25px;
+            border: none;
+            cursor: pointer;
+            background-color: #ff9503;
+            color: #f5f5f5;
+            border-radius: 50%;
+            margin: 3px;
+        }
+        .preto:active{
+            background-color: #212121;
+        }
+        .zero:hover{
+            background-color: #212121;
+        }
+        .cinza:hover{
+            background-color: #808080;
+        }
+        .laranja:hover{
+            background-color: #e67e00 ;
+        }
+        #resultado{
+            width: 207px;
+            height: 30px;
+            margin: 5px;
+            font-size: 25px;
+            padding: 5px;
+            text-align: right;
+        }
+        .tools {
+            display: flex;
+            align-items: center;
+            padding: 9px;
+        }
+        .circle {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            margin: 0px 3px;
+        }
+        .red {
+            background-color: #ff605c;
+        }
+
+        .yellow {
+            background-color: #ffbd44;
+        }
+
+        .green {
+            background-color: #00ca4e;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="fundo">
+        <h1></h1>
+        <div class="calculadora">
+            <div class="tools">
+                <div class="circle red"></div>
+                <div class="circle yellow"></div>
+                <div class="circle green"></div>
+            </div>
+            <div class="card__content"></div>
+            <p id ="resultado"></p> <!-- vai aparecer nesse paragrafo o resultado -->
+            <table>
+                <tr>
+                    <td><button class="cinza"onclick="limpar()">AC</button></td>
+                    <td><button class="cinza">+/-</button></td>
+                    <td><button class="cinza">%</button></td>
+                    <td><button class="laranja"onclick="insert('/')">/</button></td>
+                </tr>
+                <tr>
+                    <td><button class="preto" onclick="insert('7')">7</button></td>
+                    <td><button class="preto" onclick="insert('8')">8</button></td>
+                    <td><button class="preto" onclick="insert('9')">9</button></td>
+                    <td><button class="laranja"onclick="insert('x')">x</button></td>
+                </tr>
+                <tr>
+                    <td><button class="preto" onclick="insert('4')">4</button></td>
+                    <td><button class="preto" onclick="insert('5')">5</button></td>
+                    <td><button class="preto" onclick="insert('6')">6</button></td>
+                    <td><button class="laranja"onclick="insert('-')">-</button></td>
+                </tr>
+                <tr>
+                    <td><button class="preto" onclick="insert('1')">1</button></td>
+                    <td><button class="preto" onclick="insert('2')">2</button></td>
+                    <td><button class="preto" onclick="insert('3')">3</button></td>
+                    <td><button class="laranja"onclick="insert('+')">+</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button class="zero" style="width: 106px;" onclick="insert('0')">0</button></td>
+                    <td><button class="preto" onclick="insert(',')">,</button></td>
+                    <td><button class="laranja"onclick="calcular()">=</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        function insert(numero){
+            var numero2 = document.getElementById('resultado').innerHTML
+            document.getElementById('resultado').innerHTML = numero2 + numero  
+        }
+        function limpar(){
+            document.getElementById('resultado').innerHTML = ""
+        }
+        function calcular(){
+            
+            var resultado = document.getElementById('resultado').innerHTML
+            // Substitui "x" por "*" na expressão
+            /*No contexto de expressões regulares em JavaScript, a flag /g é usada para indicar uma correspondência global.
+            Ao usar a flag /g em uma expressão regular, ela irá corresponder a todas as ocorrências do padrão na string, em vez de parar após encontrar a primeira correspondência.*/
+            resultado = resultado.replace(/x/g, '*');
+            resultado = resultado.replace(/,/g, '.');
+            if(resultado){
+                document.getElementById('resultado').innerHTML = eval(resultado)
+            }
+            
+        }
+    </script>
+</body>
+</html>
